@@ -160,7 +160,7 @@ qiime tools view rep-seqs.qzv
 
 ---
 
-## 🔬 10️⃣ Taxonomic Classification
+## 🔬  Taxonomic Classification
 
 ### Reference Classifier
 
@@ -183,7 +183,7 @@ qiime feature-classifier classify-sklearn \
 
 ---
 
-## 11️⃣ Visualizing Taxonomic Composition
+##  Visualizing Taxonomic Composition
 
 ```bash
 qiime taxa barplot \
@@ -201,7 +201,7 @@ qiime tools view taxa-bar-plots.qzv
 
 ---
 
-## 12️⃣ Exporting Taxonomy Data
+##  Exporting Taxonomy Data
 
 ```bash
 qiime tools export \
@@ -217,7 +217,7 @@ cat exported-taxonomy/taxonomy.tsv
 
 ---
 
-## 13️⃣ Exporting the Feature Table
+##  Exporting the Feature Table
 
 ```bash
 qiime tools export \
@@ -236,7 +236,7 @@ biom convert \
 
 ---
 
-## 🌳 14️⃣ Phylogenetic Tree Construction
+## 🌳  Phylogenetic Tree Construction
 
 ```bash
 qiime phylogeny align-to-tree-mafft-fasttree \
@@ -249,7 +249,7 @@ qiime phylogeny align-to-tree-mafft-fasttree \
 
 ---
 
-## 15️⃣ Exporting the Phylogenetic Tree
+##  Exporting the Phylogenetic Tree
 
 ```bash
 qiime tools export \
@@ -275,3 +275,4 @@ qiime tools export \
 * Ensure `metadata.tsv` contains a column named **`sample-id`**
 * Trimming and truncation parameters should be adjusted based on quality plots
 * This pipeline is designed for **paired-end 16S rRNA data**
+
