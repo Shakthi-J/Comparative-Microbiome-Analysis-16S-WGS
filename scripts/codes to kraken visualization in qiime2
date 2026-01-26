@@ -1,0 +1,74 @@
+To get the taxa-bar-plots.qza file to visualize the data.
+We need two files 1) table.qza file and 2) taxonomy.qza file.
+
+
+To build these files from kraken output, we can make the base file with the data we got from the kraken.
+
+1) FOR TABLE.QZA FILE 💢️
+
+table.qza consist of feature-table.biom file, so to get the biom file we build it.
+
+step 1 - To convert feature table tsv to feature table biom with python script
+Pyhton script (remove ** before using)
+
+**import biom
+import pandas as pd
+
+# Load the TSV file
+df = pd.read_csv("feature_table.tsv", sep="\t", index_col=0)
+
+# Convert to BIOM format
+table = biom.Table(df.values, observation_ids=df.index, sample_ids=df.columns)
+
+# Save as BIOM file
+with open("output_table.biom", "w") as f:
+    table.to_json("OTU table", f)**
+
+Step 2 - to convert biom file to qza file using qiime2
+
+conda activate qiime2
+qiime tools import   --input-path feature_table.biom   --output-path table.qza   --type 'FeatureTable[Frequency]'
+
+--->table.qza output
+
+
+                                   OR
+                                   
+If feature-table .xls is present, first convert it to .tsv
+To convert the .xls which contains feature table to .tsv  
+
+pip install csvkit
+in2csv feature_table.xls | sed 's/,/\t/g' > feature_table.tsv
+
+Then convert .tsv file to biom file
+
+biom convert -i feature_table.tsv -o feature_table.biom --to-hdf5 --table-type="OTU table"                                   
+
+--->table.qza output
+
+
+
+2) FOR TAXONOMY.QZA FILE 💢️
+
+if we want to convert the csv file to tsv file.
+
+awk -v FPAT='[^,]*|"[^"]*"' '{for(i=1;i<=NF;i++) printf "%s\t", $i; print ""}' qiime_taxonomy.csv > qiime_taxonomy.tsv
+
+File conversion tsv to taxonomy.qza through qiime2
+
+conda activate qiime2
+qiime tools import   --input-path qiime_taxonomy.tsv   --output-path taxonomy.qza   --type 'FeatureData[Taxonomy]'
+
+--->taxonomy.qza output
+
+
+3)Once table.qza and taxonomy.qza file is ready, we will finally create the taxa-bar-plot.qzv file to visualize through qiime2 💢️
+
+qiime taxa barplot   --i-table table.qza   --i-taxonomy taxonomy.qza   --o-visualization taxa-bar-plots.qzv
+
+--->taxa-bar-plots.qzv 
+
+Visualization command (OR) open the file in qiime2 view in chrome.
+
+qiime tools view taxa-bar-plots.qzv
+
